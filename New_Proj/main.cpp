@@ -310,39 +310,43 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(image);*/
 
-	Texture texture0("Resource/textures/earth.png");
+	Texture texture0("Resource/textures/earth.png", STBI_rgb_alpha, 0);
+	Texture texture1("Resource/textures/wall.jpg", STBI_rgb, 1);
 
-	//Texture 1
-	int image_width1 = 0;
-	int image_height1 = 0;
-	int nrofChannels1 = 0;
-	unsigned char* image1 = stbi_load("Resource/textures/wall.jpg", &image_width1, &image_height1, &nrofChannels1, STBI_rgb);
+	Material material0(glm::vec3(0.1f), glm::vec3(2.0f), glm::vec3(0.f),
+		texture0.getTextureUnit(), texture1.getTextureUnit());
 
-	GLuint texture1;
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
+	////Texture 1
+	//int image_width1 = 0;
+	//int image_height1 = 0;
+	//int nrofChannels1 = 0;
+	//unsigned char* image1 = stbi_load("Resource/textures/wall.jpg", &image_width1, &image_height1, &nrofChannels1, STBI_rgb);
 
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//GLuint texture1;
+	//glGenTextures(1, &texture1);
+	//glBindTexture(GL_TEXTURE_2D, texture1);
 
 
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	if (image1)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image_width1, image_height1, 0, GL_RGB, GL_UNSIGNED_BYTE, image1);
-		glGenerateMipmap(GL_TEXTURE_2D);
 
-	}
-	else {
-		std::cout << "Error texture loading failed" << "\n";
-	}
 
-	glActiveTexture(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	stbi_image_free(image1);
+	//if (image1)
+	//{
+	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image_width1, image_height1, 0, GL_RGB, GL_UNSIGNED_BYTE, image1);
+	//	glGenerateMipmap(GL_TEXTURE_2D);
+
+	//}
+	//else {
+	//	std::cout << "Error texture loading failed" << "\n";
+	//}
+
+	//glActiveTexture(0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//stbi_image_free(image1);
 
 	//INIT MATRICES
 	glm::vec3 position(0.f);
@@ -439,8 +443,13 @@ int main()
 		core_program.set1i(0, "texture0");
 				
 		core_program.set1i(1, "texture1");
+
 		
 		
+		//Material 0
+		material0.sendToShader(core_program);
+
+
 		//Move Rotate Scale
 		//if (cos(count*pi) >= 0)
 		/*{
@@ -497,13 +506,15 @@ int main()
 		
 
 		//Activate Texture
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture0.getId());
-
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, texture0.getId());
+		
+		texture0.bind();
+		texture1.bind();
 
 		
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture1);
+		//glActiveTexture(GL_TEXTURE1);
+		//glBindTexture(GL_TEXTURE_2D, texture1.getId());
 
 
 

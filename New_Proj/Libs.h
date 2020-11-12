@@ -15,8 +15,9 @@
 #include <mat4x4.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtc\type_ptr.hpp>
-#include <stb_image/stb_image.h>
+#include "stb_image/stb_image.h"
 #include "Shader.h"
+#include "Material.h"
 
 
 //#include <SOIL2.h>
