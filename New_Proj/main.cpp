@@ -313,7 +313,7 @@ int main()
 	Texture texture0("Resource/textures/earth.png", STBI_rgb_alpha, 0);
 	Texture texture1("Resource/textures/wall.jpg", STBI_rgb, 1);
 
-	Material material0(glm::vec3(0.1f), glm::vec3(2.0f), glm::vec3(0.f),
+	Material material0(glm::vec3(0.1f), glm::vec3(1.0f), glm::vec3(1.f),
 		texture0.getTextureUnit(), texture1.getTextureUnit());
 
 	////Texture 1
