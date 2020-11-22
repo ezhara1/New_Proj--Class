@@ -1,15 +1,16 @@
 #include "Libs.h"
+
 #include "Shader.h"
 #include "Texture.h"
 
 Vertex vertices[] =
 {
 	//Position						//Color								//TexCoord				//Normals
-	glm::vec3(-0.5f, 0.5f, 0.f),	glm::vec3(1.f, 0.f, 0.f),			glm::vec2(0.f, 1.f),	glm::vec3(0.f, 0.f, -1.f),
-	glm::vec3(-0.5f, -0.5f, 0.f),	glm::vec3(0.f, 1.f, 0.f),			glm::vec2(0.f, 0.f),	glm::vec3(0.f, 1.f, -1.f),
-	glm::vec3(0.5f, -0.5f, 0.f),	glm::vec3(0.f, 0.f, 1.f),			glm::vec2(1.f, 0.f),	glm::vec3(0.f, 0.f, -1.f),
+	glm::vec3(-0.5f, 0.5f, 0.f),	glm::vec3(1.f, 0.f, 0.f),			glm::vec2(0.f, 1.f),	glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(-0.5f, -0.5f, 0.f),	glm::vec3(0.f, 1.f, 0.f),			glm::vec2(0.f, 0.f),	glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(0.5f, -0.5f, 0.f),	glm::vec3(0.f, 0.f, 1.f),			glm::vec2(1.f, 0.f),	glm::vec3(0.f, 0.f, 1.f),
 
-	glm::vec3(0.5f, 0.5f, 0.f),		glm::vec3(1.f, 0.f, 0.f),			glm::vec2(1.f, 1.f),	glm::vec3(1.f, 0.f, -1.f),
+	glm::vec3(0.5f, 0.5f, 0.f),		glm::vec3(1.f, 0.f, 0.f),			glm::vec2(1.f, 1.f),	glm::vec3(1.f, 0.f, 1.f),
 	
 	
 };
@@ -228,6 +229,11 @@ int main()
 	//Shader INIT
 
 	Shader core_program("Resource/vertex_core.shader", "Resource/fragment_core.shader", "");
+
+	// Model Mesh
+
+	Mesh test(vertices, nrOfVertices, indices, nrOfIndices);
+
 
 	/*GLuint core_program;
 	if (!loadShaders(core_program))
@@ -502,6 +508,7 @@ int main()
 		);
 		
 		core_program.setMat4fv(ProjectionMatrix, "ProjectionMatrix");
+		
 		core_program.use();
 		
 
@@ -526,7 +533,7 @@ int main()
 		//Draw
 		glDrawElements(GL_TRIANGLES, nrOfIndices, GL_UNSIGNED_INT, 0);
 
-
+		test.render(&core_program);
 		
 		glfwSwapBuffers(window);
 		glFlush();
