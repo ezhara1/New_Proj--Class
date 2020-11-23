@@ -39,30 +39,52 @@ void updateInput(GLFWwindow* window)
 	}
 }
 
-void updateInput(GLFWwindow* window, glm::vec3& position, glm::vec3& rotation, glm::vec3& scale)
+void updateInput(GLFWwindow* window, Mesh &mesh)
 {
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		position.z -= 0.001f;
+		mesh.move(glm::vec3(0.f, 0.f, -0.01f));
+		//position.z -= 0.001f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		position.z += 0.001f;
-	}if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+
+		mesh.move(glm::vec3(0.f, 0.f, +0.01f));
+		//position.z += 0.001f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		position.x -= 0.001f;
+
+		mesh.move(glm::vec3(0.01f, 0.f, 0.f));
+		//position.x -= 0.001f;
 	}if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		position.x += 0.001f;
+		mesh.move(glm::vec3(-0.01f, 0.f, 0.f));
+		//position.x += 0.001f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
-		rotation.y += 0.01f;
+		mesh.rotate(glm::vec3(0.0f, 1.f, 0.f));
+		//rotation.y += 0.01f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 	{
-		rotation.y -= 0.01f;
+		mesh.rotate(glm::vec3(0.0f, -1.f, 0.f));
+		//rotation.y -= 0.01f;
 	}
+
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+	{
+		mesh.scaleUp(glm::vec3(.1f));
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+	{
+		mesh.scaleUp(glm::vec3(-.1f));
+	}
+
+	
+
 }
 
 
@@ -232,7 +254,11 @@ int main()
 
 	// Model Mesh
 
-	Mesh test(vertices, nrOfVertices, indices, nrOfIndices);
+	Mesh test(vertices, nrOfVertices, indices, nrOfIndices,
+		glm::vec3(0.f),
+		glm::vec3(0.f),
+		glm::vec3(1.f)
+	);
 
 
 	/*GLuint core_program;
@@ -240,45 +266,7 @@ int main()
 		glfwTerminate();*/
 
 	//VAO
-	GLuint VAO;
-	glCreateVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	//GEN VBO AND BIND AND SEND DATA
-	GLuint VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	//GEN EBO AND BIND AND SEND DATA
-	GLuint EBO;
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-
-	//SET VERTEX ARRAY ATTRIBPOINTER AND ENABLE (INPUT ASSEMBLY)
-	//Position
-	//GLuint attribLocPos = glGetAttribLocation(core_program.getId(), "vertex_position");
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, position));
-	glEnableVertexAttribArray(0);
-	//Color
-	//GLuint attribLocCol = glGetAttribLocation(core_program.getId(), "vertex_color");
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, color));
-	glEnableVertexAttribArray(1);
-	//Texcoord
-	//GLuint attribLocTC = glGetAttribLocation(core_program.getId(), "vertex_texcoord");
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texcoord));
-	glEnableVertexAttribArray(2);
-	//Normal
-	//GLuint attribLocNor = glGetAttribLocation(core_program.getId(), "vertex_normal");
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, normal));
-	glEnableVertexAttribArray(3);
-
-
-
-	//BIND VAO 0
-	glBindVertexArray(0);
+	
 
 
 	
@@ -355,18 +343,7 @@ int main()
 	//stbi_image_free(image1);
 
 	//INIT MATRICES
-	glm::vec3 position(0.f);
-	glm::vec3 rotation(0.f);
-	glm::vec3 scale(1.f);
-
-	glm::mat4 ModelMatrix(1.f);
-	ModelMatrix = glm::translate(ModelMatrix, position);
-	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotation.x), glm::vec3(1.f, 0.f, 0.f));
-	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotation.y), glm::vec3(0.f, 1.f, 0.f));
-	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotation.z), glm::vec3(0.f, 0.f, 1.f));
-	ModelMatrix = glm::scale(ModelMatrix, scale);
-
-	glm::vec3 camPosition(0.f, 0.f, 1.f);
+		glm::vec3 camPosition(0.f, 0.f, 1.f);
 	glm::vec3 worldUp(0.f, 1.f, 0.f);
 	glm::vec3 camFront(0.f, 0.f, -1.f);
 	glm::mat4 ViewMatrix(1.f);
@@ -391,7 +368,7 @@ int main()
 
 	//core_program.use();
 	
-	core_program.setMat4fv(ModelMatrix, "ModelMatrix");
+	
 	core_program.setMat4fv(ViewMatrix, "ViewMatrix");
 	core_program.setMat4fv(ProjectionMatrix, "ProjectionMatrix");
 
@@ -484,18 +461,11 @@ int main()
 
 		//rotation.y -= 0.01f;
 		
-		updateInput(window, position, rotation, scale);
-
-		ModelMatrix = glm::mat4(1.f);
-		ModelMatrix = glm::translate(ModelMatrix, position);
-		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotation.x), glm::vec3(1.f, 0.f, 0.f));
-		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotation.y), glm::vec3(0.f, 1.f, 0.f));
-		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rotation.z), glm::vec3(0.f, 0.f, 1.f));
-		ModelMatrix = glm::scale(ModelMatrix, scale);
-
-		core_program.setMat4fv(ModelMatrix, "ModelMatrix");
+		updateInput(window, test);
 
 		
+
+			
 		
 		glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
@@ -527,11 +497,11 @@ int main()
 
 		//Bind vertex array object
 
-		glBindVertexArray(VAO);
+		//glBindVertexArray(VAO);
 		
 		
 		//Draw
-		glDrawElements(GL_TRIANGLES, nrOfIndices, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, nrOfIndices, GL_UNSIGNED_INT, 0);
 
 		test.render(&core_program);
 		
