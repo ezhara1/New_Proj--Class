@@ -398,6 +398,7 @@
     <ClInclude Include="Libs.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Primitive.h" />
     <ClInclude Include="Resource\stb_image\stb_image.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Vertex.h" />

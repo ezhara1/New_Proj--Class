@@ -20,6 +20,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Vertex.h"
+#include "Primitive.h"
 
 //#include <SOIL2.h>
 

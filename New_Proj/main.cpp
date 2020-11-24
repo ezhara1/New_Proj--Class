@@ -3,6 +3,10 @@
 #include "Shader.h"
 #include "Texture.h"
 
+
+
+
+
 Vertex vertices[] =
 {
 	//Position						//Color								//TexCoord				//Normals
@@ -254,7 +258,9 @@ int main()
 
 	// Model Mesh
 
-	Mesh test(vertices, nrOfVertices, indices, nrOfIndices,
+	Triangle temp = Triangle();
+	Mesh test(
+		&temp,
 		glm::vec3(0.f),
 		glm::vec3(0.f),
 		glm::vec3(1.f)
