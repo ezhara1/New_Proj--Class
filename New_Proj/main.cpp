@@ -212,6 +212,36 @@ void MoveTriangle(GLFWwindow* window, float& triangle_pos)
 //
 //}
 
+
+GLFWwindow* createWindow(
+	const char* title,
+	const int width, const int height,
+	int& fbWidth, int& fbHeight,
+	int GLmajorVer, int GLminorVer,
+	bool resizable
+)
+{
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GLmajorVer);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GLminorVer);
+	glfwWindowHint(GLFW_RESIZABLE, resizable);
+
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE)
+
+	GLFWwindow* window = glfwCreateWindow(width, height, title, NULL, NULL);
+
+
+	glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+	//glViewport(0, 0, framebufferWidth, framebufferHeight);
+
+	glfwSetFramebufferSizeCallback(window, framebuffer_resize_callback);
+
+	glfwMakeContextCurrent(window);
+
+	return window;
+
+}
+
 int main()
 {
 	//INIT GLFW
@@ -221,23 +251,21 @@ int main()
 	//Create Window
 	const int WINDOW_HEIGHT = 480;
 	const int WINDOW_WIDTH = 640;
-	int framebufferWidth = 0;
-	int framebufferHeight = 0;
+	int framebufferWidth = WINDOW_WIDTH;
+	int framebufferHeight = WINDOW_HEIGHT;
 
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE)
-
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "NEW WINDOW", NULL, NULL);
+	int GLmajorVersion = 4;
+	int GLminorVersion = 4;
 
 
-	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-	glViewport(0, 0, framebufferWidth, framebufferHeight);
-
-	glfwMakeContextCurrent(window);
+	GLFWwindow* window = createWindow(
+		"YOUTUBE_TUTORIAL",
+		WINDOW_WIDTH, WINDOW_HEIGHT,
+		framebufferWidth, framebufferHeight,
+		4, 5,
+		false
+	);
+	
 
 	//INIT GLEW (NEEDS WINDOW AND OPENGL CONTEXT)
 
@@ -254,11 +282,12 @@ int main()
 
 	//Shader INIT
 
-	Shader core_program("Resource/vertex_core.shader", "Resource/fragment_core.shader", "");
+	Shader core_program( GLmajorVersion, GLminorVersion, 
+		"Resource/vertex_core.shader", "Resource/fragment_core.shader", "");
 
 	// Model Mesh
 
-	Triangle temp = Triangle();
+	Quad temp = Quad();
 	Mesh test(
 		&temp,
 		glm::vec3(0.f),
