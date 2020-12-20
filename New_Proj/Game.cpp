@@ -155,8 +155,8 @@ void Game::initShaders()
 
 void Game::initTextures()
 {
-	this->textures.push_back(new Texture("Resource/textures/earth.png", GL_TEXTURE_2D, 0));
-	this->textures.push_back(new Texture("Resource/textures/wall.jpg", GL_TEXTURE_2D, 1));
+	this->textures.push_back(new Texture("Resource/textures/earth.png", STBI_rgb_alpha, 0));
+	this->textures.push_back(new Texture("Resource/textures/wall.jpg", STBI_rgb, 1));
 }
 
 void Game::initMaterials()
