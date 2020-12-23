@@ -4,6 +4,8 @@ void Game::update()
 {
 	//Update INput ---
 	glfwPollEvents();
+
+	this->updateInput(this->window, *this->meshes[MESH_QUAD]);
 }
 
 void Game::render()
@@ -17,31 +19,21 @@ void Game::render()
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	
+	
+	//update Uniforms
+
+	this->updateUniforms();
+
+
 	//Use program
-
-	//update uniforms
-	this->shaders[SHADER_CORE_PROGRAM]->set1i(this->textures[TEX_EARTH0]->getTextureUnit(), "texture0");
-	this->shaders[SHADER_CORE_PROGRAM]->set1i(this->textures[TEX_WALL1]->getTextureUnit(), "texture1");
-	this->materials[MAT_1]->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
-
-	glfwGetFramebufferSize(this->window, &this->framebufferWidth, &this->framebufferHeight);
-
-	ProjectionMatrix = glm::perspective(
-		glm::radians(fov),
-		static_cast<float>(framebufferWidth) / framebufferHeight,
-		nearPlane,
-		farPlane
-	);
-
 	
-	
-	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(ProjectionMatrix, "ProjectionMatrix");
 	this->shaders[SHADER_CORE_PROGRAM]->use();
 
 
 
-	this->textures[TEX_EARTH0]->bind();
-	this->textures[TEX_WALL1]->bind();
+	this->textures[TEX_EARTH0]->bind(0);
+	this->textures[TEX_WALL1]->bind(1);
 
 	this->meshes[MESH_QUAD]->render(this->shaders[SHADER_CORE_PROGRAM]);
 	
@@ -155,13 +147,13 @@ void Game::initShaders()
 
 void Game::initTextures()
 {
-	this->textures.push_back(new Texture("Resource/textures/earth.png", STBI_rgb_alpha, 0));
-	this->textures.push_back(new Texture("Resource/textures/wall.jpg", STBI_rgb, 1));
+	this->textures.push_back(new Texture("Resource/textures/earth.png", STBI_rgb_alpha));
+	this->textures.push_back(new Texture("Resource/textures/wall.jpg", STBI_rgb));
 }
 
 void Game::initMaterials()
 {
-	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f), this->textures[TEX_EARTH0]->getTextureUnit(), this->textures[TEX_WALL1]->getTextureUnit()));
+	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f), 0, 1));
 
 }
 
@@ -189,9 +181,27 @@ void Game::initUniforms()
 	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(*this->lights[0], "lightPos0");
 	this->shaders[SHADER_CORE_PROGRAM]->setVec3f(this->camPosition, "cameraPos");
 
+}
+
+void Game::updateUniforms()
+{
+
+	//update uniforms
+
+	this->materials[MAT_1]->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
+
+	glfwGetFramebufferSize(this->window, &this->framebufferWidth, &this->framebufferHeight);
+
+	ProjectionMatrix = glm::perspective(
+		glm::radians(fov),
+		static_cast<float>(framebufferWidth) / framebufferHeight,
+		nearPlane,
+		farPlane
+	);
 
 
-	
+
+	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(ProjectionMatrix, "ProjectionMatrix");
 }
 
 
@@ -229,6 +239,7 @@ Game::Game(
 		farPlane
 	);
 
+	
 	
 	this->initGLFW();
 	this->initWindow(title, resizable);
@@ -276,4 +287,60 @@ int Game::getWindowShouldClose()
 void Game::setWindowShouldClose()
 {
 	glfwSetWindowShouldClose(this->window, GLFW_TRUE);
+}
+
+void Game::updateInput(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+}
+
+void Game::updateInput(GLFWwindow* window, Mesh& mesh)
+{
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		mesh.move(glm::vec3(0.f, 0.f, -0.01f));
+		//position.z -= 0.001f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+
+		mesh.move(glm::vec3(0.f, 0.f, +0.01f));
+		//position.z += 0.001f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+
+		mesh.move(glm::vec3(0.01f, 0.f, 0.f));
+		//position.x -= 0.001f;
+	}if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		mesh.move(glm::vec3(-0.01f, 0.f, 0.f));
+		//position.x += 0.001f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+	{
+		mesh.rotate(glm::vec3(0.0f, 1.f, 0.f));
+		//rotation.y += 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+	{
+		mesh.rotate(glm::vec3(0.0f, -1.f, 0.f));
+		//rotation.y -= 0.01f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+	{
+		mesh.scaleUp(glm::vec3(.1f));
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+	{
+		mesh.scaleUp(glm::vec3(-.1f));
+	}
+
+
+
 }

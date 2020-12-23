@@ -23,18 +23,18 @@ class Texture
 {
 private:
 	GLuint id;
-	GLint textureUnit;
+	
 
 public:
 	
 	
-	Texture(char* fileName, int pic_type, GLint texture_unit) 
+	Texture(char* fileName, int pic_type) 
 	{
 
 		int image_width = 0;
 		int image_height = 0;
 		int nrofChannels = 0;
-		this->textureUnit = texture_unit;
+		
 		
 		unsigned char* image = stbi_load(fileName, &image_width, &image_height, &nrofChannels, pic_type);
 
@@ -75,13 +75,13 @@ public:
 
 	GLuint getId() { return this->id; }
 
-	void bind()
+	void bind( const GLint texture_unit)
 	{
-		glActiveTexture(GL_TEXTURE0 + this->textureUnit);
+		glActiveTexture(GL_TEXTURE0 + texture_unit );
 		glBindTexture(GL_TEXTURE_2D, this->id);
 
 	}
 
-	inline GLint getTextureUnit() const { return this->textureUnit; }
+	
 
 };
