@@ -2,7 +2,7 @@
 
 void Game::update()
 {
-	//Update INput ---
+	//Update INput ---  
 	glfwPollEvents();
 
 	this->updateInput(this->window, *this->meshes[MESH_QUAD]);
@@ -32,8 +32,8 @@ void Game::render()
 
 
 
-	this->textures[TEX_EARTH0]->bind(0);
-	this->textures[TEX_WALL1]->bind(1);
+	this->textures[TEX_EARTH0]->bind(1);
+	this->textures[TEX_WALL1]->bind(0);
 
 	this->meshes[MESH_QUAD]->render(this->shaders[SHADER_CORE_PROGRAM]);
 	
@@ -145,6 +145,7 @@ void Game::initShaders()
 
 }
 
+
 void Game::initTextures()
 {
 	this->textures.push_back(new Texture("Resource/textures/earth.png", STBI_rgb_alpha));
@@ -160,7 +161,7 @@ void Game::initMaterials()
 void Game::initMeshes()
 {
 	this->meshes.push_back(
-		new Mesh(&Quad(),
+		new Mesh(&Pyramid(),
 			glm::vec3(0.f),
 			glm::vec3(0.f),
 			glm::vec3(1.f))
