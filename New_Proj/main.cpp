@@ -31,6 +31,7 @@ GLuint indices[] =
 unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint);
 
 
+
 int main()
 {
 	

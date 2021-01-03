@@ -1,7 +1,8 @@
 #pragma once
 #include "Libs.h"
+#include "Camera.h"
 
-//ENUMARATIONS
+//ENUMARATIONSe
 enum shader_enum{SHADER_CORE_PROGRAM = 0};
 enum textures_enum{TEX_EARTH0 = 0, TEX_WALL1};
 enum material_enum{MAT_1 = 0};
@@ -22,6 +23,25 @@ private:
 	//OpenGL Context
 	const int GL_VERSION_MAJOR;
 	const int GL_VERSION_MINOR;
+
+	//Delta Time
+	float dt;
+	float curTime;
+	float lastTime;
+
+	// Mouse input
+	double lastMouseX;
+	double lastMouseY;
+	double mouseX;
+	double mouseY;
+	double mouseOffsetX;
+	double mouseOffsetY;
+	bool firstMouse;
+
+	//Camera
+
+	Camera camera;
+
 	//matrices
 	glm::mat4 ViewMatrix;
 	glm::vec3 camPosition;
@@ -93,12 +113,16 @@ public:
 	void setWindowShouldClose();
 
 	//Functions
+	void updateDt();
+	void updateKeyboardInput();
+	void updateMouseInput();
+	void updateInput();
+
 	void update();
 	void render();
 	
 	//Static FUnctions
-	static void updateInput(GLFWwindow* window);
-	static void updateInput(GLFWwindow* window, Mesh& mesh);
+	
 
 	static void framebuffer_resize_callback(
 		GLFWwindow* window, int fbW, int fbH);
