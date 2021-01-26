@@ -1,6 +1,8 @@
 #pragma once
 #include "Libs.h"
 #include "Camera.h"
+#include "Obj_loader.h"
+
 
 //ENUMARATIONSe
 enum shader_enum{SHADER_CORE_PROGRAM = 0};
@@ -67,7 +69,11 @@ private:
 
 
 	//Meshes
-	std::vector<Mesh*> meshes;
+	
+
+	//Models
+	std::vector<Model*> models;
+
 
 	//Lights
 	std::vector<glm::vec3*> lights;
@@ -82,13 +88,16 @@ private:
 	void initGLEW();
 
 	void OpenGLOptions();
+
 	
 	void initMatrices();
 
 	void initShaders();
 	void initTextures();
 	void initMaterials();
-	void initMeshes();
+	void initOBJModels();
+	
+	void initModels();
 	void initLights();
 	void initUniforms();
 

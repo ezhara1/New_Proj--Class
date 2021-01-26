@@ -15,6 +15,7 @@
 
 class Material
 {
+
 private:
 	glm::vec3 ambient;
 	glm::vec3 diffuse;

@@ -402,6 +402,8 @@
     <ClInclude Include="Libs.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Obj_loader.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Resource\stb_image\stb_image.h" />
     <ClInclude Include="Shader.h" />
@@ -413,17 +415,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Resource\stb_image\stb_image.cpp" />
     <ClCompile Include="Texture.h" />
-    <None Include="Resource\fragment_core.shader">
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </DeploymentContent>
-    </None>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Resource\fragment_core.shader" />
+    <None Include="Resource\vertex_core.shader" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glm\detail\func_common.inl" />
@@ -560,31 +554,32 @@
     <None Include="Dependencies\glm\gtx\vector_angle.inl" />
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
-    <None Include="Resource\vertex_core.shader">
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </DeploymentContent>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\glm\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="Dependencies\GLEW\Lib\glew32s.lib" />
+    <Library Include="Dependencies\GLFW\Lib\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\textures\brick.jpg" />
     <Image Include="Resource\textures\clouds.png" />
     <Image Include="Resource\textures\earth.png" />
     <Image Include="Resource\textures\glass.png" />
+    <Image Include="Resource\textures\pyramid.jpg" />
     <Image Include="Resource\textures\roses.png" />
     <Image Include="Resource\textures\wall.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="Dependencies\GLEW\Lib\glew32s.lib" />
-    <Library Include="Dependencies\GLFW\Lib\glfw3.lib" />
+    <None Include="Resource\OBJ files\teddy.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\OBJ files\cube.obj">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

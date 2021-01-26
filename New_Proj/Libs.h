@@ -18,9 +18,13 @@
 #include "stb_image/stb_image.h"
 #include "Shader.h"
 #include "Material.h"
+#include "Texture.h"
 #include "Mesh.h"
+#include "Model.h"
 #include "Vertex.h"
 #include "Primitive.h"
+
+
 
 //#include <SOIL2.h>
 

@@ -768,9 +768,6 @@
     <ClInclude Include="Dependencies\glm\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\stb_image\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -792,6 +789,15 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\stb_image\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -800,13 +806,13 @@
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\stb_image\stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\stb_image\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1213,6 +1219,7 @@
     <None Include="Dependencies\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
     <None Include="Resource\fragment_core.shader" />
     <None Include="Resource\vertex_core.shader" />
   </ItemGroup>
@@ -1220,7 +1227,18 @@
     <Text Include="Dependencies\glm\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\textures\roses.png">
+    <Library Include="Dependencies\GLEW\Lib\glew32s.lib" />
+    <Library Include="Dependencies\GLFW\Lib\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Resource\OBJ files\Crate.obj" />
+    <Object Include="Resource\OBJ files\hand.obj" />
+    <Object Include="Resource\OBJ files\house.obj" />
+    <Object Include="Resource\OBJ files\teddy.obj" />
+    <Object Include="Resource\OBJ files\cube.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\textures\brick.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resource\textures\clouds.png">
@@ -1232,12 +1250,14 @@
     <Image Include="Resource\textures\glass.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\textures\pyramid.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\textures\roses.png">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="Resource\textures\wall.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Dependencies\GLEW\Lib\glew32s.lib" />
-    <Library Include="Dependencies\GLFW\Lib\glfw3.lib" />
   </ItemGroup>
 </Project>

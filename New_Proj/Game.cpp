@@ -7,6 +7,11 @@ void Game::update()
 	
 	//this->meshes[0]->rotate(glm::vec3(0.f, 0.05f, 0.f));
 
+	this->models[0]->rotate(glm::vec3(0.f, 0.01f, 0.f));
+	//this->models[1]->rotate(glm::vec3(0.f, 0.01f, 0.f));
+	//this->models[2]->rotate(glm::vec3(0.f, 0.01f, 0.f));
+
+
 	/*std::cout << "DT: " << this->dt << "\n"
 		<< "Mouse offsetX: " << this->mouseOffsetX << " Mouse offsetY:" << this->mouseOffsetY << "\n";*/
 
@@ -117,24 +122,26 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	
 	
-	//update Uniforms
+	////update Uniforms
 
 	this->updateUniforms();
 
-	this->materials[MAT_1]->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
+	//this->materials[MAT_1]->sendToShader(*this->shaders[SHADER_CORE_PROGRAM]);
 
 
-	//Use program
+	////Use program
+	//
+	//this->shaders[SHADER_CORE_PROGRAM]->use();
+
+
+
+	//this->textures[TEX_EARTH0]->bind(1);
+	//this->textures[TEX_WALL1]->bind(0);
+
+	//this->meshes[MESH_QUAD]->render(this->shaders[SHADER_CORE_PROGRAM]);
 	
-	this->shaders[SHADER_CORE_PROGRAM]->use();
-
-
-
-	this->textures[TEX_EARTH0]->bind(1);
-	this->textures[TEX_WALL1]->bind(0);
-
-	this->meshes[MESH_QUAD]->render(this->shaders[SHADER_CORE_PROGRAM]);
-	
+	for (auto&i : this->models)			
+		i->render(this->shaders[SHADER_CORE_PROGRAM]);
 
 	glfwSwapBuffers(window);
 	glFlush();
@@ -252,18 +259,67 @@ void Game::initTextures()
 
 void Game::initMaterials()
 {
-	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f), 0, 1));
+	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(2.f), 0, 1));
 
 }
 
-void Game::initMeshes()
+
+void Game::initOBJModels()
 {
-	this->meshes.push_back(
-		new Mesh(&Pyramid(),
+	
+
+}
+
+void Game::initModels()
+{
+	std::vector<Mesh*> meshes;
+
+	
+
+	/*meshes.push_back(
+	new Mesh(&Pyramid(),
+		glm::vec3(0.f, 1.f, 0.f),
+		glm::vec3(0.f),
+		glm::vec3(0.f),
+		glm::vec3(1.f))
+		);
+	meshes.push_back(
+		new Mesh(
+			&Quad(),
 			glm::vec3(0.f),
 			glm::vec3(0.f),
-			glm::vec3(1.f))
-	);
+			glm::vec3(1.f)
+		)
+	);*/
+
+	/*this->models.push_back(new Model(
+		glm::vec3(0.f),
+		this->materials[0],
+		this->textures[TEX_WALL1],
+		this->textures[TEX_WALL1],
+		meshes
+	));
+
+	this->models.push_back(new Model(
+		glm::vec3(0.f, 1.f, 1.f),
+		this->materials[0],
+		this->textures[TEX_WALL1],
+		this->textures[TEX_WALL1],
+		meshes
+	));*/
+
+	this->models.push_back(new Model(
+		glm::vec3(2.f, 0.f, 2.f),
+		this->materials[0],
+		this->textures[TEX_WALL1],
+		this->textures[TEX_WALL1],
+		"Resource/OBJ files/teddy.obj"
+	));
+
+	for (auto*& i : meshes)
+		delete i;
+
+	meshes.clear();
 }
 
 void Game::initLights()
@@ -370,7 +426,9 @@ Game::Game(
 	this->initShaders();
 	this->initTextures();
 	this->initMaterials();
-	this->initMeshes();
+	this->initOBJModels();
+	
+	this->initModels();
 	this->initLights();
 	this->initUniforms();
 
@@ -391,8 +449,8 @@ Game::~Game()
 	for (size_t i = 0; i < this->materials.size(); i++)
 		delete this->materials[i];
 
-	for (size_t i = 0; i < this->meshes.size(); i++)
-		delete this->meshes[i];
+	for (auto*& i : this->models)
+		delete i;
 
 	for (size_t i = 0; i < this->lights.size(); i++)
 		delete this->lights[i];
