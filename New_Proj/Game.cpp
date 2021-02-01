@@ -253,13 +253,13 @@ void Game::initShaders()
 
 void Game::initTextures()
 {
-	this->textures.push_back(new Texture("Resource/textures/earth.png", STBI_rgb_alpha));
-	this->textures.push_back(new Texture("Resource/textures/wall.jpg", STBI_rgb));
+	this->textures.push_back(new Texture("Resource/textures/ruslanlow.png", STBI_rgb));
+	this->textures.push_back(new Texture("Resource/textures/ryslan.jpg", STBI_rgb));
 }
 
 void Game::initMaterials()
 {
-	this->materials.push_back(new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(2.f), 0, 1));
+	this->materials.push_back(new Material(glm::vec3(2.f), glm::vec3(1.f), glm::vec3(2.f), 0, 1));
 
 }
 
@@ -309,11 +309,11 @@ void Game::initModels()
 	));*/
 
 	this->models.push_back(new Model(
-		glm::vec3(2.f, 0.f, 2.f),
+		glm::vec3(2.f, -170.f, 2.f),
 		this->materials[0],
-		this->textures[TEX_WALL1],
-		this->textures[TEX_WALL1],
-		"Resource/OBJ files/teddy.obj"
+		this->textures[TEX_EARTH0],
+		this->textures[TEX_EARTH0],
+		"Resource/OBJ files/ruslanlow.obj"
 	));
 
 	for (auto*& i : meshes)

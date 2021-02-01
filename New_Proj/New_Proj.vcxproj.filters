@@ -1222,6 +1222,11 @@
     <None Include="ClassDiagram.cd" />
     <None Include="Resource\fragment_core.shader" />
     <None Include="Resource\vertex_core.shader" />
+    <None Include="Resource\OBJ files\teddy.obj" />
+    <None Include="Resource\OBJ files\cube.obj" />
+    <None Include="Resource\OBJ files\head.obj" />
+    <None Include="Resource\OBJ files\ruslan.obj" />
+    <None Include="Resource\OBJ files\ruslanhi.obj" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\glm\CMakeLists.txt" />
@@ -1229,13 +1234,6 @@
   <ItemGroup>
     <Library Include="Dependencies\GLEW\Lib\glew32s.lib" />
     <Library Include="Dependencies\GLFW\Lib\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Resource\OBJ files\Crate.obj" />
-    <Object Include="Resource\OBJ files\hand.obj" />
-    <Object Include="Resource\OBJ files\house.obj" />
-    <Object Include="Resource\OBJ files\teddy.obj" />
-    <Object Include="Resource\OBJ files\cube.obj" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\textures\brick.jpg">
@@ -1257,6 +1255,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resource\textures\wall.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\textures\ruslanhi.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\textures\ruslanlow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\textures\ryslan.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

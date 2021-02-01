@@ -569,6 +569,9 @@
     <Image Include="Resource\textures\glass.png" />
     <Image Include="Resource\textures\pyramid.jpg" />
     <Image Include="Resource\textures\roses.png" />
+    <Image Include="Resource\textures\ruslanhi.jpg" />
+    <Image Include="Resource\textures\ruslanlow.png" />
+    <Image Include="Resource\textures\ryslan.jpg" />
     <Image Include="Resource\textures\wall.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -578,6 +581,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\OBJ files\cube.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\OBJ files\head.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\OBJ files\ruslan.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\OBJ files\ruslanhi.obj">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
